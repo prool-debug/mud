@@ -3046,7 +3046,7 @@ void nanny(DescriptorData *d, char *arg) {
 				switch (NewNames::auto_authorize(d)) {
 					case NewNames::AUTO_ALLOW:
 						sprintf(buf,
-								"Введите пароль для %s (не вводите пароли типа '123' или 'qwe', иначе ваших персонажев могут украсть) : ",
+								"Введите пароль для %s (не вводите пароли типа '123' или 'qwe', иначе ваших персонажей могут украсть) : ",
 								GET_PAD(d->character, 1));
 						SEND_TO_Q(buf, d);
 						STATE(d) = CON_NEWPASSWD;

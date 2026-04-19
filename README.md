@@ -59,3 +59,7 @@ docker stop mud
 
 
 подключение из клиента #conn localhost 4000
+
+## Prool experiments
+
+19.04.2026. Сделан форк, чтобы посмотреть, запустится ли CI.

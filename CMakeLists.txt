@@ -1549,4 +1549,6 @@ endif ()
 
 option(WITH_OTEL "Enable OpenTelemetry integration" OFF)
 
+# 19-04-2026. prool experiment: change this file. Will CI running?
+
 # vim: set ts=4 sw=4 ai tw=0 noet syntax=cmake :

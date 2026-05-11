@@ -11,6 +11,8 @@
 *  $Revision$                                                       *
 ************************************************************************ */
 
+#define TEST_BUILD // by prool
+
 #define INTERPRETER_CPP_
 
 #include "interpreter.h"

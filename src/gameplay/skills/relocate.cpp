@@ -8,6 +8,8 @@
 #include "gameplay/mechanics/sight.h"
 #include "gameplay/mechanics/groups.h"
 
+#define TEST_BUILD // by prool
+
 extern void CheckAutoNosummon(CharData *ch);
 
 void do_relocate(CharData *ch, char *argument, int/* cmd*/, int/* subcmd*/) {

@@ -2,6 +2,8 @@
 // Copyright (c) 2007 Krodo
 // Part of Bylins http://www.mud.ru
 
+#define TEST_BUILD // by prool
+
 #include "depot.h"
 
 #include "engine/db/world_characters.h"

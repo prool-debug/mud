@@ -9,6 +9,8 @@
 #include "gameplay/communication/boards/boards.h"
 #include "engine/db/player_index.h"
 
+#define TEST_BUILD // by prool
+
 /**
 * Система привилегий иммов и демигодов, совмещенная с бывшим god.lst.
 * Убрано редактирование из мада и запись уида автоматом -> все изменения производятся прямой правкой файла на сервере.

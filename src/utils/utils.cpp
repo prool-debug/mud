@@ -12,6 +12,8 @@
 *  $Revision$                                                      *
 ************************************************************************ */
 
+#define HAVE_ICONV // prool ;-)
+
 #include "utils.h"
 
 #include <algorithm>

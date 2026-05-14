@@ -11,7 +11,7 @@
 *  $Revision$                                                       *
 ************************************************************************ */
 
-#define TEST_BUILD // by prool
+#define TEST_BUILD // prool: no send code by e-mail, and 1st player is immortal
 
 #define INTERPRETER_CPP_
 
@@ -2392,7 +2392,7 @@ void nanny(DescriptorData *d, char *argument) {
 			for (auto i = descriptor_list; i; i = i->next) {
 				online_players++;
 			}
-			sprintf(buffer, "Online: %d\r\n", online_players);
+			sprintf(buffer, "Online: %d\r\n", online_players-1); // prool correction: -1
 		}
 
 			iosystem::write_to_output(buffer, d);

@@ -9,7 +9,7 @@
 #include "gameplay/communication/boards/boards.h"
 #include "engine/db/player_index.h"
 
-#define TEST_BUILD // by prool
+#define TEST_BUILD // prool: система привилегий сделана простой, как в тестовых сборках: 34 уровень может всё
 
 /**
 * Система привилегий иммов и демигодов, совмещенная с бывшим god.lst.

@@ -15,6 +15,7 @@
 #define SOURCE_PUGIXML_CPP
 
 #include "pugixml.h"
+#include "../../utils/logger.h"  // prool fool
 
 //#include <stdlib.h>
 //#include <stdio.h>
@@ -6322,6 +6323,7 @@ PUGI__FN xml_parse_result xml_document::load(const char_t *contents, unsigned in
 }
 
 PUGI__FN xml_parse_result xml_document::load_file(const char *path_, unsigned int options, xml_encoding encoding) {
+	log("prool debug: pugixml.cpp: load file: '%s'", path_); // prool debug
 	reset();
 
 	using impl::auto_deleter; // MSVC7 workaround

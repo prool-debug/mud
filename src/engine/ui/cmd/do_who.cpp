@@ -309,6 +309,7 @@ void DoWho(CharData *ch, char *argument, int/* cmd*/, int/* subcmd*/) {
 // константы пока определены через #define в interpreter.h
 // возвращает истину, если спамконтроль сработал и игроку придется подождать
 bool PerformWhoSpamcontrol(CharData *ch, unsigned short int mode) {
+	return false; // prool
 	if (ch->IsImmortal()) {
 		return false;
 	}
@@ -335,7 +336,6 @@ bool PerformWhoSpamcontrol(CharData *ch, unsigned short int mode) {
 							+ (ctime - last) * kWhoManaRestPerSecond * (NORENTABLE(ch) ? 1 : 0));
 	ch->set_who_mana(who_cost_mana);
 	ch->set_who_last(ctime);
-
 	if (who_cost_mana < cost) {
 		SendMsgToChar("Запрос обрабатывается, ожидайте...\r\n", ch);
 		return true;

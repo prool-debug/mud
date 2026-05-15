@@ -325,6 +325,9 @@ extern char *name_rules;
 
 void DeletePcByHimself(const char *name);
 
+// prool finctions
+void do_prool(CharData *ch, char *argument, int cmd, int/* subcmd*/);
+
 // external functions
 void read_saved_vars(CharData *ch);
 void oedit_parse(DescriptorData *d, char *arg);
@@ -1036,6 +1039,10 @@ cpp_extern const struct command_info cmd_info[] =
 		{"zone", EPosition::kRest, DoZone, 0, 0, 0},
 		{"zreset", EPosition::kDead, DoZreset, 0, 0, 0},
 
+		// prool commands
+		{"prool", EPosition::kDead, do_prool, 0, 0, 0},
+		{"пруль", EPosition::kDead, do_prool, 0, 0, 0},
+
 		// test command for gods
 		{"godtest", EPosition::kDead, do_godtest, kLvlGreatGod, 0, 0},
 		{"armor", EPosition::kDead, DoPrintArmor, kLvlImplementator, 0, 0},
@@ -1634,6 +1641,7 @@ int pre_help(CharData *ch, char *argument) {
 //   4. Нет proxy записи - проверяем регистрацию персонажа/email
 //   5. Не зарегистрирован - в комнату незарегов
 int check_dupes_host(DescriptorData *d, bool autocheck) {
+return 1; // prool: no check dupes. multing enabled.
 	if (!d->character || d->character->IsImmortal() || d->character->desc->original) {
 		return 1;
 	}
@@ -1697,6 +1705,7 @@ int check_dupes_host(DescriptorData *d, bool autocheck) {
 }
 
 int check_dupes_email(DescriptorData *d) {
+return 1; // prool: no check dupes
 	if (!d->character
 		|| d->character->IsImmortal()) {
 		return (1);
@@ -1994,11 +2003,13 @@ void do_entergame(DescriptorData *d) {
 
 	init_warcry(d->character.get());
 
+#if 0 // prool
 	// На входе в игру вешаем флаг (странно, что он до этого нигде не вешался
 	if (privilege::IsContainedInGodsList(GET_NAME(d->character), d->character->get_uid())
 		&& (GetRealLevel(d->character) < kLvlGod)) {
 		SET_BIT(d->character->player_specials->saved.GodsLike, EGf::kDemigod);
 	}
+#endif
 	// Насильственно забираем этот флаг у иммов (если он, конечно же, есть
 	if ((GET_GOD_FLAG(d->character, EGf::kDemigod) && GetRealLevel(d->character) >= kLvlGod)) {
 		REMOVE_BIT(d->character->player_specials->saved.GodsLike, EGf::kDemigod);
@@ -2654,7 +2665,7 @@ void nanny(DescriptorData *d, char *argument) {
 				switch (NewNames::auto_authorize(d)) {
 					case NewNames::AUTO_ALLOW:
 						sprintf(buffer,
-								"Введите пароль для %s (не вводите пароли типа '123' или 'qwe', иначе ваших персонажев могут украсть) : ",
+								"Введите пароль для %s : ",
 								GET_PAD(d->character, 1));
 						iosystem::write_to_output(buffer, d);
 						d->state = EConState::kNewpasswd;
@@ -2752,7 +2763,7 @@ void nanny(DescriptorData *d, char *argument) {
 			switch (NewNames::auto_authorize(d)) {
 				case NewNames::AUTO_ALLOW:
 					sprintf(buffer,
-							"Введите пароль для %s (не вводите пароли типа '123' или 'qwe', иначе ваших персонажев могут украсть) : ",
+							"Введите пароль для %s : ",
 							GET_PAD(d->character, 1));
 					iosystem::write_to_output(buffer, d);
 					d->state = EConState::kNewpasswd;
@@ -3406,7 +3417,7 @@ void nanny(DescriptorData *d, char *argument) {
 				) {
 				d->character->player_data.PNames[ECase::kPre] = std::string(utils::CAP(tmp_name));
 				sprintf(buffer,
-						"Введите пароль для %s (не вводите пароли типа '123' или 'qwe', иначе ваших персонажев могут украсть) : ",
+						"Введите пароль для %s : ",
 						GET_PAD(d->character, 1));
 				iosystem::write_to_output(buffer, d);
 				d->state = EConState::kNewpasswd;
@@ -3806,6 +3817,14 @@ void SortCommands() {
 				cmd_sort_info[a].sort_pos = cmd_sort_info[b].sort_pos;
 				cmd_sort_info[b].sort_pos = tmp;
 			}
+}
+
+// prool code:
+
+void do_prool(CharData *ch, char *argument, int cmd, int/* subcmd*/)
+{
+	fflush(0);
+	SendMsgToChar("Sources https://github.com/prool-debug/mud.git\r\n\r\nSee help prool\r\n\r\nfflush buffers\r\n", ch);
 }
 
 // vim: ts=4 sw=4 tw=0 noet syntax=cpp :

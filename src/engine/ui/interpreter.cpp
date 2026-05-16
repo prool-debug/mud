@@ -327,6 +327,7 @@ void DeletePcByHimself(const char *name);
 
 // prool finctions
 void do_prool(CharData *ch, char *argument, int cmd, int/* subcmd*/);
+void do_duh(CharData *ch, char *argument, int cmd, int/* subcmd*/);
 
 // external functions
 void read_saved_vars(CharData *ch);
@@ -1042,6 +1043,8 @@ cpp_extern const struct command_info cmd_info[] =
 		// prool commands
 		{"prool", EPosition::kDead, do_prool, 0, 0, 0},
 		{"пруль", EPosition::kDead, do_prool, 0, 0, 0},
+		{"духмада", EPosition::kDead, do_duh, 0, 0, 0},
+		{"jump", EPosition::kSleep, DoGoto, kLvlGod, 0, 0},
 
 		// test command for gods
 		{"godtest", EPosition::kDead, do_godtest, kLvlGreatGod, 0, 0},
@@ -3820,6 +3823,11 @@ void SortCommands() {
 }
 
 // prool code:
+
+void do_duh(CharData *ch, char *argument, int cmd, int/* subcmd*/)
+{
+	SendMsgToChar("Вы воззвали к духу мада. Молчание было ответом.\r\n", ch);
+}
 
 void do_prool(CharData *ch, char *argument, int cmd, int/* subcmd*/)
 {

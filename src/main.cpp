@@ -1,7 +1,7 @@
 #include "engine/core/comm.h"
 
 int main(const int argc, char **argv) {
-printf("https://github.com/prool-debug/mud\n"); // prool
+printf("\x1b[32mhttps://github.com/prool-debug/mud\x1b[0m\n"); // prool
 	return main_function(argc, argv);
 }
 

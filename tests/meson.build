@@ -33,6 +33,7 @@ test_sources = files(
     'compact.trie.cpp',
     'compact.trie.iterators.cpp',
     'yaml.save.encoding.cpp',
+    'koi8r.yaml.emitter.cpp',
     'compact.trie.prefixes.cpp',
     'thread_pool.cpp',
     'world_data_source_manager.cpp',
@@ -47,7 +48,8 @@ test_sources = files(
     'mob_classes.loader.cpp',
     'world_load_order.cpp',
     'obj_decay_manager.cpp',
-    'char.utilities.cpp'
+    'char.utilities.cpp',
+    'exit_is_empty.cpp'
 )
 
 fs = import('fs')

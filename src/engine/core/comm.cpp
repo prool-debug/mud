@@ -187,6 +187,15 @@ extern const char* build_features;
 *        & becomes &amp;
 */
 
+#if 1 // prool:MSSP
+#define MSSP			70
+#define MSSP_VAR		1
+#define MSSP_VAL		2
+void mssp_start(DescriptorData * t);
+const char mssp_will[] = {(char) IAC, (char) WILL, (char) MSSP, '\0'};
+extern int total_players;
+#endif
+
 int count_mxp_tags(const int bMXP, const char *txt, int length) {
 	char c;
 	const char *p;
@@ -1458,6 +1467,7 @@ void game_loop(socket_t mother_desc)
 	{
 		if (descriptor_list == nullptr) {
 			log("No connections.  Going to sleep.");
+			total_players=0; // prool
 #ifdef HAS_EPOLL
 			if (epoll_wait(epoll, events, MAXEVENTS, -1) == -1)
 #else
@@ -1908,6 +1918,8 @@ int new_descriptor(socket_t s)
 
 	// trying to turn on MSDP
 	iosystem::write_to_descriptor(newd->descriptor, will_msdp, sizeof(will_msdp));
+
+	iosystem::write_to_descriptor(newd->descriptor, mssp_will, strlen(mssp_will)); // prool: MSSP. Место, где стоит это код важно. Если этот вызов переместить после compress_will, то он перестанет работать
 
 #if defined(HAVE_ZLIB)
 	iosystem::write_to_descriptor(newd->descriptor, iosystem::compress_will, sizeof(iosystem::compress_will));

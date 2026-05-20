@@ -5,6 +5,8 @@
 \brief Система ввода-вывода.
 \detail Сетевой ввод-вывод: получение команд от пользователей и отправка ответов сервера.
 */
+#include <arpa/inet.h>
+#include <netdb.h>
 
 #include "engine/core/iosystem.h"
 
@@ -23,6 +25,16 @@
 
 #include <fmt/format.h>
 
+#if 1 // prool:MSSP
+#define MSSP			70
+#define MSSP_VAR		1
+#define MSSP_VAL		2
+void mssp_start(DescriptorData * t);
+extern const char mssp_will[];
+int total_players;
+char *ptime(void);
+char *hostname(const char *ip);
+#endif
 
 namespace iosystem {
 
@@ -243,6 +255,14 @@ int process_input(DescriptorData *t) {
 
 						t->msdp_support(true);
 						break;
+
+                             		case MSSP: // prool: MSSP
+                                        char buf0[500];
+					printf("%s prooldebug: MSSP start. IP %s [%s], plrs %i\n", ptime(), t->host, hostname (t->host), total_players);
+                                        mssp_start(t);
+                                        sprintf(buf0,"MSSP start %s", t->host);
+                                        log(buf0);
+					break;
 
 					default: continue;
 				}
@@ -1251,4 +1271,154 @@ char *show_state(CharData *ch, CharData *victim) {
 
 } // namespace iosystem
 
+// begin prool code:
+
+void mssp_start(DescriptorData * t) // by prool
+{char buf[1024];
+const auto boot_time = shutdown_parameters.get_boot_time();
+
+#if 0
+const char mssp_str[] = {(char)IAC,(char)SB,(char)MSSP,
+	(char)MSSP_VAR,'P','L','A','Y','E','R','S',(char)MSSP_VAL,'0',
+	(char)MSSP_VAR,'N','A','M','E',(char)MSSP_VAL,'V','i','r','t','u','s','t','a','n',' ','M','U','D',
+	(char)IAC,(char)SE,'\0'};
+write_to_descriptor(t->descriptor, mssp_str, strlen(mssp_str));
+#endif
+
+#if 1
+sprintf(buf,
+"%c%c%c%cPLAYERS%c%i%cNAME%cVirtustan MUD%cUPTIME%c%li%cCRAWL DELAY%c-1\
+%cHOSTNAME%cvirtustan.net\
+%cPORT%c3000\
+%cCODEBASE%cCircleMUD\
+%cCONTACT%cproolix@gmail.com\
+%cCREATED%c2007\
+%cIP%c95.217.157.136\
+%cLANGUAGE%crussian\
+%cLOCATION%cEurope\
+%cMINIMUM AGE%c0\
+%cWEBSITE%chttp://virtustan.net\
+%cFAMILY%cDikuMUD\
+%cAREAS%c%i\
+%cMOBILES%c%i\
+%cOBJECTS%c%i\
+%cROOMS%c%i\
+%cCLASSES%c15\
+%cRACES%c6\
+%cANSI%c1\
+%cMCCP%c1\
+%cMCP%c0\
+%cMSP%c0\
+%cMXP%c0\
+%cPUEBLO%c0\
+%cGMCP%c0\
+%cMSDP%c1\
+%cHIRING BUILDERS%c1\
+%cHIRING CODERS%c1\
+%cPLAYER CLANS%c1\
+%cWORLD ORIGINALITY%c1\
+%cGENRE%cFantasy\
+%cGAMESYSTEM%cCustom\
+%cLEVELS%c30\
+%cVT100%c0\
+%cPAY TO PLAY%c0\
+%cPAY FOR PERKS%c0\
+%cINTERMUD%c0\
+%cXTERM 256 COLORS%c0\
+%cXTERM TRUE COLORS%c0\
+%cUTF-8%c1\
+%cCHARSET%cUTF-8%ckoi8-r%ccp1251\
+%cREFERRAL%ctbamud.com:4000%ctbamud.com:9091\
+%c%c",
+IAC,SB,MSSP,MSSP_VAR,MSSP_VAL,total_players,MSSP_VAR,MSSP_VAL,MSSP_VAR,MSSP_VAL,(long int)boot_time,
+MSSP_VAR,MSSP_VAL,
+MSSP_VAR,MSSP_VAL,
+MSSP_VAR,MSSP_VAL,
+MSSP_VAR,MSSP_VAL,
+MSSP_VAR,MSSP_VAL,
+MSSP_VAR,MSSP_VAL,
+MSSP_VAR,MSSP_VAL,
+MSSP_VAR,MSSP_VAL,
+MSSP_VAR,MSSP_VAL,
+MSSP_VAR,MSSP_VAL,
+MSSP_VAR,MSSP_VAL,
+MSSP_VAR,MSSP_VAL,
+MSSP_VAR,MSSP_VAL,104/*top_of_zone_table + 1*/ /*statistic_zones*/,
+MSSP_VAR,MSSP_VAL,top_of_mobt + 1 /*statistic_mobs*/,
+MSSP_VAR,MSSP_VAL,927/*top_of_objt + 1*/ /*statistic_objs*/,
+MSSP_VAR,MSSP_VAL,top_of_world + 1 /*statistic_rooms*/,
+MSSP_VAR,MSSP_VAL,
+MSSP_VAR,MSSP_VAL,
+MSSP_VAR,MSSP_VAL,
+MSSP_VAR,MSSP_VAL,
+MSSP_VAR,MSSP_VAL,
+MSSP_VAR,MSSP_VAL,
+MSSP_VAR,MSSP_VAL,
+MSSP_VAR,MSSP_VAL,
+MSSP_VAR,MSSP_VAL,
+MSSP_VAR,MSSP_VAL,
+MSSP_VAR,MSSP_VAL,
+MSSP_VAR,MSSP_VAL,
+MSSP_VAR,MSSP_VAL,
+MSSP_VAR,MSSP_VAL,
+MSSP_VAR,MSSP_VAL,
+MSSP_VAR,MSSP_VAL,
+MSSP_VAR,MSSP_VAL,
+MSSP_VAR,MSSP_VAL,
+MSSP_VAR,MSSP_VAL,
+MSSP_VAR,MSSP_VAL,
+MSSP_VAR,MSSP_VAL,
+MSSP_VAR,MSSP_VAL,
+MSSP_VAR,MSSP_VAL,
+MSSP_VAR,MSSP_VAL,
+MSSP_VAR, MSSP_VAL, MSSP_VAL, MSSP_VAL,
+MSSP_VAR, MSSP_VAL, MSSP_VAL,
+IAC,SE);
+
+// printf("MSSP total_players %i\n",total_players);
+
+iosystem::write_to_descriptor(t->descriptor, buf, strlen(buf));
+#endif
+}
+
+// begin prool code
+
+char *ptime(void) // by prool. Возвращаемое значение: ссылка на текстовую строку с текущим временем
+	{
+	char *tmstr;
+	time_t mytime;
+
+	mytime = time(0);
+
+	tmstr = (char *) asctime(localtime(&mytime));
+	*(tmstr + strlen(tmstr) - 1) = '\0';
+
+	return tmstr;
+
+	}
+
+char *hostname(const char *ip) { // written by Copilot
+    static char host[NI_MAXHOST];   // статичний буфер
+    struct sockaddr_in sa;
+
+    memset(&sa, 0, sizeof(sa));
+    sa.sin_family = AF_INET;
+
+    // Конвертац╕я IP - binary
+    if (inet_pton(AF_INET, ip, &sa.sin_addr) != 1) {
+        strcpy(host, "*");
+        return host;
+    }
+
+    // Reverse DNS lookup
+    int res = getnameinfo((struct sockaddr*)&sa, sizeof(sa),
+                          host, sizeof(host),
+                          NULL, 0, NI_NAMEREQD);
+
+    if (res != 0) {
+        strcpy(host, "*");
+    }
+
+    return host;
+}
 // vim: ts=4 sw=4 tw=0 noet syntax=cpp :

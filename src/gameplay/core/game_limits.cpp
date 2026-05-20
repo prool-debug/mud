@@ -50,6 +50,8 @@
 
 const int kRecallSpellsInterval = 28;
 
+extern int total_players; // prool
+
 extern int idle_rent_time;
 extern int idle_max_level;
 extern int idle_void;
@@ -1139,13 +1141,16 @@ int up_obj_where(ObjData *obj) {
 
 void hour_update() {
 	DescriptorData *i;
+	int total_players_tmp=0; // prool
 
 	for (i = descriptor_list; i; i = i->next) {
 		if  (i->state != EConState::kPlaying || i->character == nullptr || i->character->IsFlagged(EPlrFlag::kWriting))
 			continue;
 		sprintf(buf, "%sМинул час.%s\r\n", kColorBoldRed, kColorNrm);
+		total_players_tmp++;
 		iosystem::write_to_output(buf, i);
 	}
+	total_players=total_players_tmp;
 }
 
 void room_point_update() {

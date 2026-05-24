@@ -12,6 +12,7 @@
 ************************************************************************ */
 
 #define TEST_BUILD // prool: no send code by e-mail, and 1st player is immortal
+#define BUFLEN 1024
 
 #define INTERPRETER_CPP_
 
@@ -304,6 +305,8 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #endif
+
+int prool_test_flag; // prool
 
 extern RoomRnum r_frozen_start_room;
 extern const char *religion_menu;
@@ -3829,10 +3832,14 @@ void do_duh(CharData *ch, char *argument, int cmd, int/* subcmd*/)
 	SendMsgToChar("Вы воззвали к духу мада. Молчание было ответом.\r\n", ch);
 }
 
+
 void do_prool(CharData *ch, char *argument, int cmd, int/* subcmd*/)
 {
+	char buf [BUFLEN];
+
 	fflush(0);
-	SendMsgToChar("Sources https://github.com/prool-debug/mud.git\r\n\r\nSee help prool\r\n\r\nfflush buffers\r\n", ch);
+	snprintf(buf, BUFLEN, "This MUD sources https://github.com/prool-debug/mud.git\r\n\r\nFor prools help use commad HELP PROOL\r\n\r\nFile buffers ist now flushed\r\nprool test flag=%i\r\n\r\n", prool_test_flag);
+	SendMsgToChar(buf, ch);
 }
 
 // vim: ts=4 sw=4 tw=0 noet syntax=cpp :

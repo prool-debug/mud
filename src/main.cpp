@@ -1,10 +1,12 @@
 #include "engine/core/comm.h"
 
 extern int total_players; // prool
+extern int prool_test_flag;
 
 int main(const int argc, char **argv) {
 
-total_players=0; // prool
+total_players=0;
+prool_test_flag=1;
 
 printf("\x1b[32mMUD sources: https://github.com/prool-debug/mud\x1b[0m\n"); // prool
 	return main_function(argc, argv);

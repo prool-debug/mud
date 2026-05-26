@@ -258,7 +258,7 @@ int process_input(DescriptorData *t) {
 
                              		case MSSP: // prool: MSSP
                                         char buf0[500];
-					printf("%s prooldebug: MSSP start. IP %s [%s], plrs %i\n", ptime(), t->host, hostname (t->host), total_players);
+					printf("%s MSSP IP %s [%s], plrs %i\n", ptime(), t->host, hostname (t->host), total_players);
                                         mssp_start(t);
                                         sprintf(buf0,"MSSP start %s", t->host);
                                         log(buf0);

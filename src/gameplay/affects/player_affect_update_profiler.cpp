@@ -156,8 +156,9 @@ class Profiler {
 
  private:
 	void report() const {
-		log("%s", fmt::format("player_affect_update profile: runs={} window={}", m_runs, kWindowSize).c_str());
+		//log("%s", fmt::format("player_affect_update profile: runs={} window={}", m_runs, kWindowSize).c_str()); // prool
 		for (std::size_t i = 0; i < m_sections.size(); ++i) {
+#if 0 // prool
 			log("%s",
 				fmt::format(
 					"player_affect_update profile section={} avg={:.6f}s min={:.6f}s p50={:.6f}s p95={:.6f}s p99={:.6f}s max={:.6f}s n={}",
@@ -169,8 +170,10 @@ class Profiler {
 					m_sections[i].percentile(0.99),
 					m_sections[i].max(),
 					m_sections[i].count()).c_str());
+#endif
 		}
 		for (std::size_t i = 0; i < m_counters.size(); ++i) {
+#if 0 // prool
 			log("%s",
 				fmt::format(
 					"player_affect_update profile counter={} avg={:.2f} min={:.0f} p50={:.0f} p95={:.0f} p99={:.0f} max={:.0f} n={}",
@@ -182,6 +185,7 @@ class Profiler {
 					m_counters[i].percentile(0.99),
 					m_counters[i].max(),
 					m_counters[i].count()).c_str());
+#endif
 		}
 	}
 

@@ -671,12 +671,12 @@ void Heartbeat::pulse(const int missed_pulses, pulse_label_t &label) {
 			step.action()->perform(pulse_number(), missed_pulses);
 			const auto execution_time = timer.delta().count();
 			if (step.modulo() >= kSecsPerMudHour * kPassesPerSec) {
-				log("Heartbeat step: %s", step.name().c_str());
+				//log("Heartbeat step: %s", step.name().c_str()); // prool
 			}
 			if (pmem_used != last_pmem_used) {
 //				char buf [128];
 				last_pmem_used = pmem_used;
-				log("HeartBeat memory resize, step:(%s), memory used: virt (%d kB) phys (%d kB)", step.name().c_str(), vmem_used, pmem_used);
+				//log("HeartBeat memory resize, step:(%s), memory used: virt (%d kB) phys (%d kB)", step.name().c_str(), vmem_used, pmem_used); // prool
 //				mudlog(buf, CMP, kLvlGreatGod, SYSLOG, true);
 			}
 			step_span->SetAttribute("execution_time_seconds", execution_time);

@@ -371,7 +371,7 @@ void player_affect_update() {
 	const auto total_elapsed = total_timer.delta().count();
 	profile.sections[static_cast<std::size_t>(Section::kTotal)] = total_elapsed;
 	player_affect_update_profiler::record_run(profile);
-	log("player affect update: timer %f, num affected players %d, all %d recalc %d", total_elapsed, count, c_all, recalc);
+	//log("player affect update: timer %f, num affected players %d, all %d recalc %d", total_elapsed, count, c_all, recalc); // prool
 }
 
 // This file update battle affects only
